@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.StandardOpenOption;
@@ -76,6 +77,21 @@ public class MyApp {
                 }
             }
         });
+
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Object sc = e.getSource();
+                if (sc == item) {
+                    System.out.println("test action events!");
+                } else {
+                    System.out.println("successfully!");
+                }
+            }
+        });
+
+
+
+
 
         frame.add(label2);
         frame.add(label3);
