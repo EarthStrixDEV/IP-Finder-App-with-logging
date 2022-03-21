@@ -15,7 +15,12 @@ public class MyApp {
     JButton btn = new JButton("Click");
     JButton btn2 = new JButton("Log Data");
     JMenuBar menuBar = new JMenuBar();
-    JMenu menu = new JMenu();
+    JMenu menu = new JMenu("File");
+    JMenu menu2 = new JMenu("Windows");
+    JMenuItem item = new JMenuItem("Open");
+    JMenuItem item2 = new JMenuItem("Save");
+    JMenuItem item3 = new JMenuItem("Exit");
+    JMenuItem item_windows = new JMenuItem("About");
     JLabel label = new JLabel("IP Finder App");
     JLabel label2 = new JLabel("Ipv4");
     JLabel label3 = new JLabel("Ipv6");
@@ -80,6 +85,13 @@ public class MyApp {
         frame.add(btn2);
         frame.add(text);
         frame.add(box);
+        menu.add(item);
+        menu.add(item2);
+        menu.add(item3);
+        menu2.add(item_windows);
+        menuBar.add(menu);
+        menuBar.add(menu2);
+        frame.setJMenuBar(menuBar);
         frame.setSize(500, 500);
         frame.setLayout(null);
         frame.setVisible(true);
