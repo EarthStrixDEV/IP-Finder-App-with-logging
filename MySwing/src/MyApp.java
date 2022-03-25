@@ -9,7 +9,7 @@ import java.net.*;
 
 public class MyApp {
     Path file = Paths.get("MySwing/src/Log_Data");
-    String[] data_box = {"Name", "Address"};
+    String[] data_box = {"UserAddress", "WebSite"};
     JFrame frame = new JFrame("IP Finder App");
     JButton btn = new JButton("Click");
     JButton btn2 = new JButton("Log Data");
@@ -18,7 +18,7 @@ public class MyApp {
     JMenuItem item_windows = new JMenuItem("About");
     JLabel label = new JLabel("IP Finder App");
     JLabel label2 = new JLabel("IPv4:");
-    JLabel label3 = new JLabel("IPv6:");
+    JLabel label3 = new JLabel("UserAddress:");
     JTextField textOut = new JTextField();
     JTextField textOut2 = new JTextField();
     JTextField text = new JTextField();
@@ -40,20 +40,39 @@ public class MyApp {
         label2.setForeground(Color.BLACK);
         label2.setBounds(48, 142, 300, 40);
 
-        label3.setFont(new Font("Prompt", Font.PLAIN, 20));
-        label3.setForeground(Color.BLACK);
-        label3.setBounds(48, 182, 300, 40);
+        label3.setFont(new Font("Prompt", Font.PLAIN, 15));
+        label3.setForeground((Color.BLACK));
+        label3.setBounds(3, 182, 300, 40);
+
+        box.setBounds(380, 50, 80, 30);
 
         btn.setBounds(170, 100, 100, 30);
         btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                try {
-                    String fromText = text.getText();
-                    String ipv4 = Inet4Address.getByName(fromText).getHostAddress();
-                    String ipv6 = Inet6Address.getAllByName();
-                    textOut.setText(ipv4);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (box.getItemAt(0) == data_box[0]) {
+                    try {
+                        InetAddress[] addr = InetAddress.getAllByName(Inet6Address.getLocalHost().getHostName());
+                        for(InetAddress a : addr) {
+                            textOut2.setText(a.toString());
+                        }
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                } else if (box.getItemAt(1) == data_box[1]) {
+                    try {
+                        String fromText = text.getText();
+                        String ipv4 = Inet4Address.getByName(fromText).getHostAddress();
+                        textOut.setText(ipv4);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        textOut.setText(null);
+                        textOut2.setText(null);
+                    } catch (Exception t) {
+                        t.printStackTrace();
+                    }
                 }
             }
         });
@@ -66,9 +85,11 @@ public class MyApp {
                     BufferedWriter buffer = Files.newBufferedWriter(file ,StandardCharsets.UTF_8 ,StandardOpenOption.APPEND);
                     String fromText = text.getText();
                     String fromText2 = textOut.getText();
+                    String fromText3 = textOut2.getText();
                     buffer.write("My_Log\n");
                     buffer.write("Name => " + fromText + "\n");
-                    buffer.write("Ipv4 => " + fromText2 + " ");
+                    buffer.write("Ipv4 => " + fromText2 + "\n");
+                    buffer.write("UserAddress => " + fromText3 + " ");
                     buffer.write("\n");
                     buffer.newLine();
                     buffer.close();

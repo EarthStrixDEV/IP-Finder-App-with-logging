@@ -14,3 +14,12 @@ My_Log
 Name => www.google.com
 Ipv4 => 216.58.199.228 
 
+My_Log
+Name => 
+Ipv4 => 127.0.0.1 UserAddress =>LAPTOP-E3FKOR59/fe80:0:0:0:fccc:befe:6c35:7723%11 
+
+My_Log
+Name => 
+Ipv4 => 127.0.0.1
+UserAddress =>LAPTOP-E3FKOR59/fe80:0:0:0:fccc:befe:6c35:7723%11 
+
