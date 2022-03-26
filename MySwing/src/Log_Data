@@ -1,30 +1,14 @@
-My_Log
-Name => www.facebook.com
-Ipv4 => 179.60.194.35 
+UserAddress => LAPTOP-E3FKOR59/fe80:0:0:0:fccc:befe:6c35:7723%11
 
 My_Log
 Name => www.line.me
-Ipv4 => 203.104.129.195 
+Ipv4 => 203.104.129.195
 
 My_Log
-Name => www.pornhub.org
-Ipv4 => 125.26.170.3 
-
-My_Log
-Name => www.google.com
-Ipv4 => 216.58.199.228 
-
-My_Log
-Name => 
-Ipv4 => 127.0.0.1 UserAddress =>LAPTOP-E3FKOR59/fe80:0:0:0:fccc:befe:6c35:7723%11 
-
-My_Log
-Name => 
-Ipv4 => 127.0.0.1
-UserAddress =>LAPTOP-E3FKOR59/fe80:0:0:0:fccc:befe:6c35:7723%11 
+Name => www.github.com
+Ipv4 => 
 
 My_Log
 Name => www.github.com
 Ipv4 => 20.205.243.166
-UserAddress => LAPTOP-E3FKOR59/fe80:0:0:0:fccc:befe:6c35:7723%11 
 
