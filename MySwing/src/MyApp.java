@@ -8,15 +8,18 @@ import java.nio.file.*;
 import java.net.*;
 
 public class MyApp {
-    // create object component widget
+    /* create object component widget */
     Path file = Paths.get("MySwing/src/Log_Data");
     String[] data_box = { "UserAddress", "WebSite" };
     JFrame frame = new JFrame("IP/Address Finder");
-    JButton btn = new JButton("Click");
+    JButton btn = new JButton("Submit");
     JButton btn2 = new JButton("Log Data");
+    JButton btn3 = new JButton("Clear Log");
     JMenuBar menuBar = new JMenuBar();
     JMenu menu = new JMenu("Windows");
+    JMenu menu_2 = new JMenu("Help");
     JMenuItem item_windows = new JMenuItem("About");
+    JMenuItem item_windows_2 = new JMenuItem("Tutorial");
     JLabel label = new JLabel("IP/Address Finder");
     JLabel label2 = new JLabel("IPv4:");
     JLabel label3 = new JLabel("UserAddress:");
@@ -26,7 +29,7 @@ public class MyApp {
     JComboBox box = new JComboBox(data_box);
 
     public MyApp() {
-        // set component
+        /* set properties component */
         text.setFont(new Font("Prompt", Font.PLAIN, 15));
         text.setForeground(Color.BLACK);
         text.setBounds(130, 50, 220, 30);
@@ -51,10 +54,11 @@ public class MyApp {
 
         btn.setBounds(170, 100, 100, 30);
         btn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 if (box.getItemAt(0) == box.getSelectedItem()) {
                     try {
-                        // get User address from class InetAddress
+                        /* get User address from class InetAddress */
                         InetAddress[] addr = InetAddress.getAllByName(Inet6Address.getLocalHost().getHostName());
                         for (InetAddress a : addr) {
                             textOut2.setText(a.toString());
@@ -64,12 +68,12 @@ public class MyApp {
                     }
                 } else if (box.getItemAt(1) == box.getSelectedItem()) {
                     try {
-                        // get Ipv4 from class InetAddress
+                        /* get Ipv4 from class InetAddress */
                         String fromText = text.getText();
                         String ipv4 = Inet4Address.getByName(fromText).getHostAddress();
                         textOut.setText(ipv4);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
                     }
                 } else {
                     System.out.printf(null);
@@ -82,13 +86,15 @@ public class MyApp {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    BufferedWriter buffer = Files.newBufferedWriter(file, StandardCharsets.UTF_8,StandardOpenOption.APPEND);
+                    BufferedWriter buffer = Files.newBufferedWriter(file, StandardCharsets.UTF_8,
+                            StandardOpenOption.APPEND);
                     if (box.getItemAt(0) == box.getSelectedItem()) {
                         try {
                             String fromText3 = textOut2.getText();
                             buffer.write("UserAddress => " + fromText3 + "\n");
                             buffer.newLine();
                             buffer.close();
+                            JOptionPane.showMessageDialog(null, "Write Logging Complete!");
                         } catch (Exception f) {
                             f.printStackTrace();
                         }
@@ -101,6 +107,7 @@ public class MyApp {
                             buffer.write("Ipv4 => " + fromText2 + "\n");
                             buffer.newLine();
                             buffer.close();
+                            JOptionPane.showMessageDialog(null, "Write Logging Complete!");
                         } catch (Exception f) {
                             f.printStackTrace();
                         }
@@ -113,16 +120,44 @@ public class MyApp {
             }
         });
 
-        // create message box
-        item_windows.addActionListener(new ActionListener() {
+        btn3.setBounds(170, 270, 100, 30);
+        btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == item_windows) {
-                    JOptionPane.showMessageDialog(null, "Beta Version 1.0 | Developed by EarthStrix");
-                }
+                
             }
         });
 
-        //add all component on JFrame
+        /* create message box */
+        item_windows.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "Beta Version 1.0 | Developed by EarthStrix", "Alert",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        });
+
+        item_windows_2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame tutorial = new JFrame("Tutorial App");
+                JTextArea show = new JTextArea();
+                tutorial.setVisible(true);
+                tutorial.setSize(800, 500);
+                tutorial.add(show);
+
+                String text_container = "How To Use IP/Address Finder\n"
+                        + "\n"
+                        + "1.Choose your function Website/UserAddress on Checkbox\n"
+                        + "2.Enter name website\n"
+                        + "3.Press click button for show result\n"
+                        + "4.Press Log Data button for save your result on file's App\n"
+                        + "5.If you select UserAddress ,You can submit button without enter name website\n"
+                        + "\n"
+                        + "Thank For Used my app :)\n";
+                show.setText(text_container);
+                show.setFont(new Font("Prompt", Font.PLAIN, 20));
+            }
+        });
+
+        /* add all component on JFrame */
         frame.add(label2);
         frame.add(label3);
         frame.add(label);
@@ -130,10 +165,13 @@ public class MyApp {
         frame.add(textOut2);
         frame.add(btn);
         frame.add(btn2);
+        frame.add(btn3);
         frame.add(text);
         frame.add(box);
         menu.add(item_windows);
+        menu_2.add(item_windows_2);
         menuBar.add(menu);
+        menuBar.add(menu_2);
         frame.setJMenuBar(menuBar);
         frame.setSize(550, 450);
         frame.setLayout(null);
