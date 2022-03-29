@@ -19,6 +19,7 @@ public class MyApp {
     JMenu menu = new JMenu("Windows");
     JMenu menu_2 = new JMenu("Help");
     JMenuItem item_windows = new JMenuItem("About");
+    JMenuItem item_windows_3 = new JMenuItem("Log Data");
     JMenuItem item_windows_2 = new JMenuItem("Tutorial");
     JLabel label = new JLabel("IP/Address Finder");
     JLabel label2 = new JLabel("IPv4:");
@@ -26,6 +27,7 @@ public class MyApp {
     JTextField textOut = new JTextField();
     JTextField textOut2 = new JTextField();
     JTextField text = new JTextField();
+    JTextField text_log = new JTextField();
     JComboBox box = new JComboBox(data_box);
 
     public MyApp() {
@@ -123,6 +125,19 @@ public class MyApp {
         btn3.setBounds(170, 270, 100, 30);
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                JFrame show_text = new JFrame();
+                show_text.setVisible(true);
+                show_text.setSize(600, 500);
+                
+                try {
+                    BufferedReader bfr = new BufferedReader(Files.newBufferedReader(file));
+                    String read_text = "";
+                    while ((read_text=bfr.readLine()) != null) {
+                        
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
                 
             }
         });
@@ -168,6 +183,7 @@ public class MyApp {
         frame.add(btn3);
         frame.add(text);
         frame.add(box);
+        menu.add(item_windows_3);
         menu.add(item_windows);
         menu_2.add(item_windows_2);
         menuBar.add(menu);
