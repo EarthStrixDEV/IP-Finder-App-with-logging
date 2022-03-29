@@ -27,7 +27,6 @@ public class MyApp {
     JTextField textOut = new JTextField();
     JTextField textOut2 = new JTextField();
     JTextField text = new JTextField();
-    JTextField text_log = new JTextField();
     JComboBox box = new JComboBox(data_box);
 
     public MyApp() {
@@ -125,15 +124,18 @@ public class MyApp {
         btn3.setBounds(170, 270, 100, 30);
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                JTextArea text_log = new JTextArea();
+                JScrollPane scroll = new JScrollPane();
                 JFrame show_text = new JFrame();
                 show_text.setVisible(true);
                 show_text.setSize(600, 500);
+                show_text.add(text_log);
                 
                 try {
                     BufferedReader bfr = new BufferedReader(Files.newBufferedReader(file));
                     String read_text = "";
                     while ((read_text=bfr.readLine()) != null) {
-                        
+                        text_log.setText(read_text);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
