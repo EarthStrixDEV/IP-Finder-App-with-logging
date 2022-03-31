@@ -1,3 +1,8 @@
+/* 
+    > นาย วราพล จิตสุข
+    > 6430300862 
+*/
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -30,7 +35,7 @@ public class MyApp {
     JComboBox box = new JComboBox(data_box);
 
     public MyApp() {
-        /* set properties component */
+        /* set attribute component */
         text.setFont(new Font("Prompt", Font.PLAIN, 15));
         text.setForeground(Color.BLACK);
         text.setBounds(130, 50, 220, 30);
@@ -54,6 +59,8 @@ public class MyApp {
         box.setBounds(380, 50, 120, 30);
 
         btn.setBounds(170, 100, 100, 30);
+        
+        /* Button ActionListener */
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,35 +131,28 @@ public class MyApp {
         btn3.setBounds(170, 270, 100, 30);
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JTextArea text_log = new JTextArea();
-                JScrollPane scroll = new JScrollPane();
-                JFrame show_text = new JFrame();
-                show_text.setVisible(true);
-                show_text.setSize(600, 500);
-                show_text.add(text_log);
-                
                 try {
-                    BufferedReader bfr = new BufferedReader(Files.newBufferedReader(file));
-                    String read_text = "";
-                    while ((read_text=bfr.readLine()) != null) {
-                        text_log.setText(read_text);
-                    }
+                    File getFile = new File("MySwing/src/Log_Data");
+                    FileWriter fw = new FileWriter(getFile,  false);
+                    PrintWriter pw = new PrintWriter(fw, false);
+                    pw.flush();
+                    pw.close();
+                    fw.close();
+                    JOptionPane.showMessageDialog(null ,"Delete log data Complete!");
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                }
-                
+                }  
             }
         });
 
-        /* create message box */
+        /* MenuItem ActionListener */
         item_windows.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Beta Version 1.0 | Developed by EarthStrix", "Alert",
-                        JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "BETA Version 1.0 | Developed by EarthStrix");
             }
         });
 
-        item_windows_2.addActionListener(new ActionListener() {
+        item_windows_2.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e) {
                 JFrame tutorial = new JFrame("Tutorial App");
                 JTextArea show = new JTextArea();
@@ -174,7 +174,36 @@ public class MyApp {
             }
         });
 
-        /* add all component on JFrame */
+        item_windows_3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JTextArea text_log = new JTextArea();
+                JScrollPane scroll = new JScrollPane(text_log);
+                JFrame show_text = new JFrame("Log Data");
+                show_text.setVisible(true);
+                show_text.setSize(600, 500);
+                show_text.add(text_log);
+                show_text.getContentPane().add(scroll);
+
+                text_log.setBounds(1, 1, 550, 1000);
+                text_log.setFont(new Font("Prompt", Font.PLAIN, 25));
+
+                scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+                try {
+                    BufferedReader bfr = Files.newBufferedReader(file);
+                    String read_text = "" ,read_line = "";
+                    while ((read_text = bfr.readLine()) != null) {
+                        read_line += read_text + "\n";
+                    }
+                    text_log.setText(read_line);
+                    bfr.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        /* add all component to JFrame */
         frame.add(label2);
         frame.add(label3);
         frame.add(label);
@@ -198,7 +227,7 @@ public class MyApp {
 
     public static void main(String[] args) throws Exception {
         /* RUN APP */
-        EventQueue.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable(){
             public void run() {
                 new MyApp();
             }
