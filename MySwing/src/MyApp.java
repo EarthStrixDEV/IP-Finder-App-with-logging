@@ -15,11 +15,12 @@ import java.net.*;
 public class MyApp {
     /* create object component widget */
     Path file = Paths.get("MySwing/src/Log_Data");
-    String[] data_box = { "UserAddress", "WebSite" };
+    String[] data_box = { "UserAddress", "WebSite Address" };
     JFrame frame = new JFrame("IP/Address Finder");
     JButton btn = new JButton("Submit");
     JButton btn2 = new JButton("Log Data");
     JButton btn3 = new JButton("Clear Log");
+    JButton btn4 = new JButton("Delete All");
     JMenuBar menuBar = new JMenuBar();
     JMenu menu = new JMenu("Windows");
     JMenu menu_2 = new JMenu("Help");
@@ -27,7 +28,7 @@ public class MyApp {
     JMenuItem item_windows_3 = new JMenuItem("Log Data");
     JMenuItem item_windows_2 = new JMenuItem("Tutorial");
     JLabel label = new JLabel("IP/Address Finder");
-    JLabel label2 = new JLabel("IPv4:");
+    JLabel label2 = new JLabel("IP Address:");
     JLabel label3 = new JLabel("UserAddress:");
     JTextField textOut = new JTextField();
     JTextField textOut2 = new JTextField();
@@ -48,9 +49,9 @@ public class MyApp {
         label.setForeground(Color.BLACK);
         label.setBounds(155, 10, 300, 40);
 
-        label2.setFont(new Font("Prompt", Font.PLAIN, 20));
+        label2.setFont(new Font("Prompt", Font.PLAIN, 15));
         label2.setForeground(Color.BLACK);
-        label2.setBounds(48, 142, 300, 40);
+        label2.setBounds(20, 142, 300, 40);
 
         label3.setFont(new Font("Prompt", Font.PLAIN, 15));
         label3.setForeground((Color.BLACK));
@@ -71,6 +72,8 @@ public class MyApp {
                         for (InetAddress a : addr) {
                             textOut2.setText(a.toString());
                         }
+                        InetAddress ipv4_user = InetAddress.getLocalHost();
+                        textOut.setText(ipv4_user.toString());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -83,8 +86,6 @@ public class MyApp {
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                } else {
-                    System.out.printf(null);
                 }
             }
         });
@@ -98,8 +99,10 @@ public class MyApp {
                             StandardOpenOption.APPEND);
                     if (box.getItemAt(0) == box.getSelectedItem()) {
                         try {
+                            String fromText = textOut.getText();
                             String fromText3 = textOut2.getText();
-                            buffer.write("UserAddress => " + fromText3 + "\n");
+                            buffer.write("UserHostAddress => " + fromText3 + "\n");
+                            buffer.write("UserIPAddress => " + fromText + "\n");
                             buffer.newLine();
                             buffer.close();
                             JOptionPane.showMessageDialog(null, "Write Logging Complete!");
@@ -133,7 +136,7 @@ public class MyApp {
             public void actionPerformed(ActionEvent e) {
                 try {
                     File getFile = new File("MySwing/src/Log_Data");
-                    FileWriter fw = new FileWriter(getFile,  false);
+                    FileWriter fw = new FileWriter(getFile, false);
                     PrintWriter pw = new PrintWriter(fw, false);
                     pw.flush();
                     pw.close();
@@ -142,6 +145,16 @@ public class MyApp {
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }  
+            }
+        });
+        
+        btn4.setBounds(420, 152, 90, 30);
+        btn4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String blank = "";
+                textOut.setText(blank);
+                textOut2.setText(blank);
+                text.setText(blank);    
             }
         });
 
@@ -159,6 +172,7 @@ public class MyApp {
                 tutorial.setVisible(true);
                 tutorial.setSize(800, 500);
                 tutorial.add(show);
+                show.setBounds(0, 0, 800, 1000);
 
                 String text_container = "How To Use IP/Address Finder\n"
                         + "\n"
@@ -170,24 +184,29 @@ public class MyApp {
                         + "\n"
                         + "Thank For Used my app :)\n";
                 show.setText(text_container);
+                show.setEditable(false);
                 show.setFont(new Font("Prompt", Font.PLAIN, 20));
             }
         });
 
         item_windows_3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                JFrame show_text = new JFrame("Log Data");
+                JPanel panel = new JPanel();
                 JTextArea text_log = new JTextArea();
                 JScrollPane scroll = new JScrollPane(text_log);
-                JFrame show_text = new JFrame("Log Data");
-                show_text.setVisible(true);
-                show_text.setSize(600, 500);
-                show_text.add(text_log);
-                show_text.getContentPane().add(scroll);
+                text_log.setFont(new Font("Prompt", Font.PLAIN, 18));
+                text_log.setEditable(false);
 
-                text_log.setBounds(1, 1, 550, 1000);
-                text_log.setFont(new Font("Prompt", Font.PLAIN, 25));
+                show_text.getContentPane().add(scroll);
+                show_text.setLocationRelativeTo(null);
 
                 scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+                panel.add(scroll);
+                show_text.add(panel);
+                show_text.setVisible(true);
+                show_text.setSize(800, 750);
 
                 try {
                     BufferedReader bfr = Files.newBufferedReader(file);
@@ -210,6 +229,7 @@ public class MyApp {
         frame.add(textOut);
         frame.add(textOut2);
         frame.add(btn);
+        frame.add(btn4);
         frame.add(btn2);
         frame.add(btn3);
         frame.add(text);
@@ -223,14 +243,5 @@ public class MyApp {
         frame.setSize(550, 450);
         frame.setLayout(null);
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) throws Exception {
-        /* RUN APP */
-        SwingUtilities.invokeLater(new Runnable(){
-            public void run() {
-                new MyApp();
-            }
-        });
     }
 }
