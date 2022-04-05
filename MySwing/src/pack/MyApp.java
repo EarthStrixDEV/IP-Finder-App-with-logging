@@ -1,3 +1,4 @@
+package pack;
 /* 
     > นาย วราพล จิตสุข
     > 6430300862 
@@ -14,7 +15,7 @@ import java.net.*;
 
 public class MyApp {
     /* create object component widget */
-    Path file = Paths.get("MySwing/src/Log_Data");
+    Path file = Paths.get("MySwing/src/pack/Log_Data");
     String[] data_box = { "UserAddress", "WebSite Address" };
     JFrame frame = new JFrame("IP/Address Finder");
     JButton btn = new JButton("Submit");
@@ -101,6 +102,7 @@ public class MyApp {
                         try {
                             String fromText = textOut.getText();
                             String fromText3 = textOut2.getText();
+                            buffer.newLine();
                             buffer.write("UserHostAddress => " + fromText3 + "\n");
                             buffer.write("UserIPAddress => " + fromText + "\n");
                             buffer.newLine();
@@ -113,6 +115,7 @@ public class MyApp {
                         try {
                             String fromText = text.getText();
                             String fromText2 = textOut.getText();
+                            buffer.newLine();
                             buffer.write("My_Log\n");
                             buffer.write("Name => " + fromText + "\n");
                             buffer.write("Ipv4 => " + fromText2 + "\n");
@@ -135,9 +138,11 @@ public class MyApp {
         btn3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    File getFile = new File("MySwing/src/Log_Data");
+                    String info = "Warapon Jitsook 6430300862";
+                    File getFile = new File("MySwing/src/pack/Log_Data");
                     FileWriter fw = new FileWriter(getFile, false);
                     PrintWriter pw = new PrintWriter(fw, false);
+                    fw.write(info);
                     pw.flush();
                     pw.close();
                     fw.close();
