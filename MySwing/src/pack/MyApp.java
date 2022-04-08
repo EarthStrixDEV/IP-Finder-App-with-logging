@@ -13,7 +13,7 @@ import java.nio.file.StandardOpenOption;
 import java.nio.file.*;
 import java.net.*;
 
-public class MyApp {
+public class MyApp extends Run {
     /* create object component widget */
     Path file = Paths.get("MySwing/src/pack/Log_Data");
     String[] data_box = { "UserAddress", "WebSite Address" };
@@ -31,6 +31,7 @@ public class MyApp {
     JLabel label = new JLabel("IP/Address Finder");
     JLabel label2 = new JLabel("IP Address:");
     JLabel label3 = new JLabel("UserAddress:");
+    JLabel label4 = new JLabel("URL:");
     JTextField textOut = new JTextField();
     JTextField textOut2 = new JTextField();
     JTextField text = new JTextField();
@@ -58,6 +59,10 @@ public class MyApp {
         label3.setForeground((Color.BLACK));
         label3.setBounds(3, 182, 300, 40);
 
+        label4.setFont(new Font("Prompt", Font.PLAIN, 15));
+        label4.setForeground((Color.BLACK));
+        label4.setBounds(90, 45, 300, 40);
+
         box.setBounds(380, 50, 120, 30);
 
         btn.setBounds(170, 100, 100, 30);
@@ -79,13 +84,18 @@ public class MyApp {
                         ex.printStackTrace();
                     }
                 } else if (box.getItemAt(1) == box.getSelectedItem()) {
-                    try {
-                        /* get Ipv4 from class InetAddress */
-                        String fromText = text.getText();
-                        String ipv4 = Inet4Address.getByName(fromText).getHostAddress();
-                        textOut.setText(ipv4);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                    if (text.getText().equals("")) {
+                        /* Url textField is blank or not*/
+                        JOptionPane.showMessageDialog(null ,"Insert URL !");
+                    } else {
+                        try {
+                            /* get Ipv4 from class InetAddress */
+                            String fromText = text.getText();
+                            String ipv4 = Inet4Address.getByName(fromText).getHostAddress();
+                            textOut.setText(ipv4);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             }
@@ -125,8 +135,6 @@ public class MyApp {
                         } catch (Exception f) {
                             f.printStackTrace();
                         }
-                    } else {
-                        System.out.printf(null);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -230,6 +238,7 @@ public class MyApp {
         /* add all component to JFrame */
         frame.add(label2);
         frame.add(label3);
+        frame.add(label4);
         frame.add(label);
         frame.add(textOut);
         frame.add(textOut2);
@@ -247,6 +256,7 @@ public class MyApp {
         frame.setJMenuBar(menuBar);
         frame.setSize(550, 450);
         frame.setLayout(null);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 }
